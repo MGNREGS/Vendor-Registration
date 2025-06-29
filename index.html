@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration Form - MGNREGA</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top to allow scrolling */
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 900px; /* Wider form for better layout */
+            width: 100%;
+            margin-top: 20px; /* Add some margin from the top */
+        }
+        h1, h2 {
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600; /* This applies to the whole label by default */
+            color: #2d3748;
+        }
+        /* Specific style for the italicized phrase within the label */
+        label .italic-nobold {
+            font-style: italic;
+            font-weight: normal; /* Override the parent label's font-weight */
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #4a5568;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="file"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+            outline: none;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .btn {
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .btn-primary {
+            background-image: linear-gradient(to right, #4299e1, #3182ce);
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-image: linear-gradient(to right, #3182ce, #2c5282);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: #cbd5e0;
+            color: #2d3748;
+            border: 1px solid #a0aec0;
+        }
+        .btn-secondary:hover {
+            background-color: #a0aec0;
+            transform: translateY(-2px);
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .disclaimer {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #edf2f7;
+            border-left: 5px solid #4299e1;
+            border-radius: 8px;
+        }
+        .confirmation-message {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            background-color: #f7fafc;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: auto; /* Override full width for checkboxes */
+            margin-right: 5px;
+        }
+
+        /* Styling for the review section */
+        #review_print_section p {
+            margin-bottom: 8px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        #review_print_section strong {
+            color: #2d3748;
+        }
+        #review_print_section .review-section-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            margin-top: 2rem; /* mt-8 */
+            margin-bottom: 1rem; /* mb-4 */
+            color: #1a202c;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 5px;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 640px) {
+            .form-container {
+                padding: 20px;
+            }
+            .grid-layout {
+                grid-template-columns: 1fr; /* Stack columns on small screens */
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Vendor Registration Form</h1>
+        <h2 class="text-xl font-semibold mb-6">for “Registration of Vendors under Mahatma Gandhi NREGA“</h2>
+
+        <div class="disclaimer">
+            <p>
+                **Important:** This application is specifically for empanelment of vendors supplying civil construction, electrical, sanitary and water-supply related all kind of goods and services. Suppliers of Stationery items and service providers for Hiring of vehicles may also submit applications. Please note that registration is only for empanelment purposes and does not guarantee the issuance of any supply order.
+            </p>
+        </div>
+
+        <div id="form_inputs_section">
+            <form id="vendorRegistrationForm" class="mt-8">
+                <div class="form-group">
+                    <label for="goods_services">Name of good(s) and service(s) for which you want to register (<span class="italic-nobold">Please ensure your GST registration is currently active and covers the goods/services you wish to supply</span>):</label>
+                    <textarea id="goods_services" name="goods_services" rows="3" required></textarea>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="vendor_name">1. (a) Name of the Vendor:</label>
+                        <input type="text" id="vendor_name" name="vendor_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor_mobile">1. (b) Mobile No.:</label>
+                        <input type="tel" id="vendor_mobile" name="vendor_mobile" pattern="[0-9]{10}" placeholder="+91 XXXXXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor_email">1. (c) Email:</label>
+                        <input type="email" id="vendor_email" name="vendor_email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="registered_office_address">2. Address of the registered office:</label>
+                    <textarea id="registered_office_address" name="registered_office_address" rows="3" required></textarea>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="proprietor_name">3. (a) Name of the Proprietor/ Signatory:</label>
+                        <input type="text" id="proprietor_name" name="proprietor_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="authorization_letter_upload">3. (b) Upload Proof of Proprietorship/Authorization letter:</label>
+                        <input type="file" id="authorization_letter_upload" name="authorization_letter_upload" accept=".pdf,.doc,.docx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="proprietor_mobile">3. (c) Mobile No.:</label>
+                        <input type="tel" id="proprietor_mobile" name="proprietor_mobile" pattern="[0-9]{10}" placeholder="+91 XXXXXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="proprietor_email">3. (d) Email:</label>
+                        <input type="email" id="proprietor_email" name="proprietor_email" required>
+                    </div>
+                    <div class="form-group col-span-full">
+                        <label for="communication_address">3. (e) Address for Communication:</label>
+                        <textarea id="communication_address" name="communication_address" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="date_of_establishment">4. (a) Date of Establishment:</label>
+                        <input type="date" id="date_of_establishment" name="date_of_establishment" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization_type">4. (b) Type of Organization:</label>
+                        <select id="organization_type" name="organization_type" required>
+                            <option value="">Select Type</option>
+                            <option value="Proprietorship">Proprietorship</option>
+                            <option value="Partnership">Partnership</option>
+                            <option value="Private Limited Company">Private Limited Company</option>
+                            <option value="Public Limited Company">Public Limited Company</option>
+                            <option value="Limited Liability Partnership (LLP)">Limited Liability Partnership (LLP)</option>
+                            <option value="Cooperative Society">Cooperative Society</option>
+                            <option value="Trust">Trust</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden" id="other_organization_type_group">
+                        <label for="other_organization_type">Specify Other Type of Organization:</label>
+                        <input type="text" id="other_organization_type" name="other_organization_type">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="trade_license_details">5. Trade Licence details with validity:</label>
+                    <input type="text" id="trade_license_details" name="trade_license_details" placeholder="License Number, Issuing Authority, Validity Date" required>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="gst_active_registration_no">6. (a) Active GST Registration No.:</label>
+                        <input type="text" id="gst_active_registration_no" name="gst_active_registration_no" placeholder="GSTIN" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gst_date_of_registration">6. (b) Date of Registration:</label>
+                        <input type="date" id="gst_date_of_registration" name="gst_date_of_registration" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pan_no">7. (a) PAN :</label>
+                    <input type="text" id="pan_no" name="pan_no" placeholder="PAN Number" required>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="gst_clearance_date">8. (a) Date of latest GST clearance certificate:</label>
+                        <input type="date" id="gst_clearance_date" name="gst_clearance_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gst_clearance_period">8. (b) Period for which GST tax has been paid:</label>
+                        <input type="text" id="gst_clearance_period" name="gst_clearance_period" placeholder="e.g., FY 2023-24" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gst_clearance_certificate_upload">8. (c) Upload latest GST clearance certificate from competent authority:</label>
+                        <input type="file" id="gst_clearance_certificate_upload" name="gst_clearance_certificate_upload" accept=".pdf,.doc,.docx" required>
+                    </div>
+                </div>
+
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="income_tax_clearance_date">9. (a) Date of latest Income Tax clearance certificate:</label>
+                        <input type="date" id="income_tax_clearance_date" name="income_tax_clearance_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="income_tax_clearance_period">9. (b) Period for which Income Tax has been paid:</label>
+                        <input type="text" id="income_tax_clearance_period" name="income_tax_clearance_period" placeholder="e.g., FY 2023-24" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="income_tax_clearance_certificate_upload">9. (c) Upload latest Income Tax clearance certificate from competent authority:</label>
+                        <input type="file" id="income_tax_clearance_certificate_upload" name="income_tax_clearance_certificate_upload" accept=".pdf,.doc,.docx" required>
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-semibold mt-8 mb-4">Bank Details</h2>
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="bank_account_holder">10. (a) Name of Account Holder:</label>
+                        <input type="text" id="bank_account_holder" name="bank_account_holder" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_name">Name of the Bank:</label>
+                        <input type="text" id="bank_name" name="bank_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_branch">Branch:</label>
+                        <input type="text" id="bank_branch" name="bank_branch" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_account_no">Account No.:</label>
+                        <input type="text" id="bank_account_no" name="bank_account_no" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_ifs_code">IFS Code:</label>
+                        <input type="text" id="bank_ifs_code" name="bank_ifs_code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank_passbook_copy">10. (b) Upload Copy of the first page of the Bank Passbook having Account details:</label>
+                        <input type="file" id="bank_passbook_copy" name="bank_passbook_copy" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-semibold mt-8 mb-4">AREA OF OPERATION</h2>
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label for="supply_district">11. Please select the district where you wish to supply goods, services or both:</label>
+                        <select id="supply_district" name="supply_district" required>
+                            <option value="">Select District</option>
+                            <option value="Baksa">Baksa</option>
+                            <option value="Bajali">Bajali</option>
+                            <option value="Barpeta">Barpeta</option>
+                            <option value="Biswanath">Biswanath</option>
+                            <option value="Bongaigaon">Bongaigaon</option>
+                            <option value="Cachar">Cachar</option>
+                            <option value="Charaideo">Charaideo</option>
+                            <option value="Chirang">Chirang</option>
+                            <option value="Darrang">Darrang</option>
+                            <option value="Dhemaji">Dhemaji</option>
+                            <option value="Dhubri">Dhubri</option>
+                            <option value="Dibrugarh">Dibrugarh</option>
+                            <option value="Dima Hasao">Dima Hasao</option>
+                            <option value="Goalpara">Goalpara</option>
+                            <option value="Golaghat">Golaghat</option>
+                            <option value="Hailakandi">Hailakandi</option>
+                            <option value="Hojai">Hojai</option>
+                            <option value="Jorhat">Jorhat</option>
+                            <option value="Kamrup Metropolitan">Kamrup Metropolitan</option>
+                            <option value="Kamrup Rural">Kamrup Rural</option>
+                            <option value="Karbi Anglong">Karbi Anglong</option>
+                            <option value="Kokrajhar">Kokrajhar</option>
+                            <option value="Lakhimpur">Lakhimpur</option>
+                            <option value="Majuli">Majuli</option>
+                            <option value="Morigaon">Morigaon</option>
+                            <option value="Nagaon">Nagaon</option>
+                            <option value="Nalbari">Nalbari</option>
+                            <option value="Sivasagar">Sivasagar</option>
+                            <option value="Sonitpur">Sonitpur</option>
+                            <option value="South Salmara-Mankachar">South Salmara-Mankachar</option>
+                            <option value="Sribhumi">Sribhumi</option>
+                            <option value="Tamulpur">Tamulpur</option>
+                            <option value="Tinsukia">Tinsukia</option>
+                            <option value="Udalguri">Udalguri</option>
+                            <option value="West Karbi Anglong">West Karbi Anglong</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden" id="preferred_blocks_group">
+                        <label>12. Preferred Development Block(s) (if any, please tick ):</label>
+                        <div class="checkbox-group" id="preferred_blocks_checkboxes">
+                            <!-- Checkboxes will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-8">
+                    <label for="declaration_checkbox" class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="declaration_checkbox" name="declaration_checkbox" class="form-checkbox h-5 w-5 text-blue-600 rounded" required>
+                        <span class="ml-2 text-gray-700 text-base">
+                            I/We certify that the information furnished above is correct and complete to the best of my/our knowledge and belief. If at any time I am/we are found to have concealed any material information or if the same is found incorrect or misleading, the District Programme Coordinator, MGNREGA reserves the right to cancel the registration and take any other action as deemed fit without notice or compensation. I/We undertake to inform the District Programme Coordinator, MGNREGA of any subsequent change in the above particulars regarding my/our business from time to time.
+                        </span>
+                    </label>
+                </div>
+
+                <div class="grid-layout mt-8">
+                    <div class="form-group">
+                        <label for="signatory_name">Name (Signatory):</label>
+                        <input type="text" id="signatory_name" name="signatory_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signatory_designation">Designation:</label>
+                        <input type="text" id="signatory_designation" name="signatory_designation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="place">Place:</label>
+                        <input type="text" id="place" name="place" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group col-span-full">
+                        <label>Signature & Seal of the Vendor:</label>
+                        <p class="text-sm text-gray-500">
+                            (This is a digital form. For official submission, a physical signature and seal on the printed copy of this filled form must be emailed at <a href="mailto:vendorregistration_mgnregsassam@gmail.com" class="text-blue-600 hover:underline">vendorregistration_mgnregsassam@gmail.com</a>.)
+                        </p>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" id="review_print_btn" class="btn btn-primary">Review & Print</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="review_print_section" class="hidden">
+            <h2 class="text-xl font-semibold mb-4">Review Your Application</h2>
+            <div id="review_content" class="p-4 border rounded-lg bg-gray-50">
+                <!-- Review content will be populated here -->
+            </div>
+            <div class="btn-group">
+                <button type="button" id="edit_btn" class="btn btn-secondary">Edit Application</button>
+                <button type="button" id="print_btn" class="btn btn-secondary">Print for Signing</button>
+                <button type="submit" form="vendorRegistrationForm" id="submit_btn" class="btn btn-primary">Final Submit</button>
+            </div>
+        </div>
+
+        <div id="confirmationMessage" class="confirmation-message">
+            <p class="font-bold text-lg">Thank You for Registering!</p>
+            <p>Your application has been successfully submitted. We will review your details and get back to you shortly.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const organizationTypeSelect = document.getElementById('organization_type');
+            const otherOrganizationTypeGroup = document.getElementById('other_organization_type_group');
+            const otherOrganizationTypeInput = document.getElementById('other_organization_type');
+
+            const supplyDistrictSelect = document.getElementById('supply_district');
+            const preferredBlocksGroup = document.getElementById('preferred_blocks_group');
+            const preferredBlocksCheckboxesDiv = document.getElementById('preferred_blocks_checkboxes');
+
+            const formInputsSection = document.getElementById('form_inputs_section');
+            const reviewPrintSection = document.getElementById('review_print_section');
+            const reviewContentDiv = document.getElementById('review_content');
+            const reviewPrintBtn = document.getElementById('review_print_btn');
+            const editBtn = document.getElementById('edit_btn');
+            const printBtn = document.getElementById('print_btn');
+            const submitBtn = document.getElementById('submit_btn'); // Final submit button
+
+            // Sample data for development blocks (replace with actual data from a backend/API in a real application)
+            const developmentBlocks = {
+                "Baksa": ["Baska Block 1", "Baska Block 2", "Baska Block 3"],
+                "Bajali": ["Bajali Block A", "Bajali Block B"],
+                "Barpeta": ["Barpeta Block X", "Barpeta Block Y", "Barpeta Block Z"],
+                "Biswanath": ["Biswanath Block Alpha", "Biswanath Block Beta"],
+                "Bongaigaon": ["Bongaigaon Block 1", "Bongaigaon Block 2"],
+                "Cachar": ["Cachar Block North", "Cachar Block South"],
+                "Charaideo": ["Charaideo Block A", "Charaideo Block B"],
+                "Chirang": ["Chirang Block X", "Chirang Block Y"],
+                "Darrang": ["Darrang Block P", "Darrang Block Q"],
+                "Dhemaji": ["Dhemaji Block East", "Dhemaji Block West"],
+                "Dhubri": ["Dhubri Block I", "Dhubri Block II"],
+                "Dibrugarh": ["Dibrugarh Central", "Dibrugarh Rural"],
+                "Dima Hasao": ["Haflong", "Maibang", "Umrangso", "Harangajao", "Laisong"],
+                "Goalpara": ["Goalpara Block A", "Goalpara Block B"],
+                "Golaghat": ["Golaghat Block North", "Golaghat Block South"],
+                "Hailakandi": ["Hailakandi Block I", "Hailakandi Block II"],
+                "Hojai": ["Hojai Block East", "Hojai Block West"],
+                "Jorhat": ["Jorhat Block A", "Jorhat Block B"],
+                "Kamrup Metropolitan": ["Kamrup Metro Block 1", "Kamrup Metro Block 2"],
+                "Kamrup Rural": ["Kamrup Rural Block X", "Kamrup Rural Block Y"],
+                "Karbi Anglong": ["Karbi Anglong Block A", "Karbi Anglong Block B"],
+                "Kokrajhar": ["Kokrajhar Block 1", "Kokrajhar Block 2"],
+                "Lakhimpur": ["Lakhimpur Block North", "Lakhimpur Block South"],
+                "Majuli": ["Majuli Block I", "Majuli Block II"],
+                "Morigaon": ["Morigaon Block East", "Morigaon Block West"],
+                "Nagaon": ["Nagaon Block A", "Nagaon Block B"],
+                "Nalbari": ["Nalbari Block North", "Nalbari Block South"],
+                "Sivasagar": ["Sivasagar Block I", "Sivasagar Block II"],
+                "Sonitpur": ["Sonitpur Block East", "Sonitpur Block West"],
+                "South Salmara-Mankachar": ["South Salmara Block A", "Mankachar Block B"],
+                "Sribhumi": ["Sribhumi Block 1", "Sribhumi Block 2"],
+                "Tamulpur": ["Tamulpur Block A", "Tamulpur Block B"],
+                "Tinsukia": ["Tinsukia Block North", "Tinsukia Block South"],
+                "Udalguri": ["Udalguri Block I", "Udalguri Block II"],
+                "West Karbi Anglong": ["West Karbi Anglong Block A", "West Karbi Anglong Block B"],
+                "" : [] // Default empty for "Select District"
+            };
+
+            // Function to toggle visibility and required attribute for Other Organization Type
+            function toggleOtherOrganizationTypeField() {
+                if (organizationTypeSelect.value === 'Other') {
+                    otherOrganizationTypeGroup.classList.remove('hidden');
+                    otherOrganizationTypeInput.setAttribute('required', 'required');
+                } else {
+                    otherOrganizationTypeGroup.classList.add('hidden');
+                    otherOrganizationTypeInput.removeAttribute('required');
+                    otherOrganizationTypeInput.value = ''; // Clear value when hidden
+                }
+            }
+
+            // Function to populate development blocks based on selected district
+            function populateDevelopmentBlocks() {
+                const selectedDistrict = supplyDistrictSelect.value;
+                const blocks = developmentBlocks[selectedDistrict] || [];
+
+                preferredBlocksCheckboxesDiv.innerHTML = ''; // Clear previous checkboxes
+
+                if (blocks.length > 0) {
+                    preferredBlocksGroup.classList.remove('hidden');
+                    blocks.forEach(block => {
+                        const checkboxItem = document.createElement('div');
+                        checkboxItem.className = 'checkbox-item';
+
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `block_${block.replace(/\s+/g, '_')}`; // Create a unique ID
+                        checkbox.name = 'preferred_blocks[]'; // Use array-like name for multiple selection
+                        checkbox.value = block;
+                        checkbox.className = 'form-checkbox h-4 w-4 text-blue-600 rounded'; // Tailwind styling
+
+                        const label = document.createElement('label');
+                        label.htmlFor = checkbox.id;
+                        label.textContent = block;
+                        label.className = 'ml-1 text-gray-700 text-sm cursor-pointer';
+
+                        checkboxItem.appendChild(checkbox);
+                        checkboxItem.appendChild(label);
+                        preferredBlocksCheckboxesDiv.appendChild(checkboxItem);
+                    });
+                } else {
+                    preferredBlocksGroup.classList.add('hidden');
+                }
+            }
+
+            // Function to gather form data for review
+            function getFormDataForReview() {
+                const formData = new FormData(document.getElementById('vendorRegistrationForm'));
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    if (key.includes('[]')) { // For multi-select checkboxes
+                        const name = key.replace('[]', '');
+                        if (!data[name]) {
+                            data[name] = [];
+                        }
+                        data[name].push(value);
+                    } else if (value instanceof File) {
+                         // For file inputs, show file name, not raw data
+                        data[key] = value.name || 'No file selected';
+                    }
+                    else {
+                        data[key] = value;
+                    }
+                }
+                return data;
+            }
+
+            // Function to display review content
+            function displayReviewContent(data) {
+                reviewContentDiv.innerHTML = ''; // Clear previous content
+
+                // Helper to append a paragraph
+                const appendParagraph = (label, value) => {
+                    if (value) {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<strong>${label}:</strong> ${value}`;
+                        reviewContentDiv.appendChild(p);
+                    }
+                };
+
+                appendParagraph('Good(s) and Service(s) to Register', data['goods_services']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">1. Vendor Details</h3>';
+                appendParagraph('Name of the Vendor', data['vendor_name']);
+                appendParagraph('Mobile No.', data['vendor_mobile']);
+                appendParagraph('Email', data['vendor_email']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">2. Registered Office Address</h3>';
+                appendParagraph('Address', data['registered_office_address']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">3. Proprietor/Signatory Details</h3>';
+                appendParagraph('Name of Proprietor/Signatory', data['proprietor_name']);
+                appendParagraph('Proof of Proprietorship/Authorization Letter', data['authorization_letter_upload']);
+                appendParagraph('Mobile No.', data['proprietor_mobile']);
+                appendParagraph('Email', data['proprietor_email']);
+                appendParagraph('Address for Communication', data['communication_address']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">4. Establishment Details</h3>';
+                appendParagraph('Date of Establishment', data['date_of_establishment']);
+                let orgType = data['organization_type'];
+                if (orgType === 'Other' && data['other_organization_type']) {
+                    orgType += ` (${data['other_organization_type']})`;
+                }
+                appendParagraph('Type of Organization', orgType);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">5. Trade Licence Details</h3>';
+                appendParagraph('Trade Licence details with validity', data['trade_license_details']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">6. GST Registration Details</h3>';
+                appendParagraph('Active GST Registration No.', data['gst_active_registration_no']);
+                appendParagraph('Date of Registration', data['gst_date_of_registration']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">7. PAN Details</h3>';
+                appendParagraph('PAN', data['pan_no']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">8. GST Clearance Certificate</h3>';
+                appendParagraph('Date of latest GST clearance certificate', data['gst_clearance_date']);
+                appendParagraph('Period for which GST tax has been paid', data['gst_clearance_period']);
+                appendParagraph('GST clearance certificate upload', data['gst_clearance_certificate_upload']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">9. Income Tax Clearance Certificate</h3>';
+                appendParagraph('Date of latest Income Tax clearance certificate', data['income_tax_clearance_date']);
+                appendParagraph('Period for which Income Tax has been paid', data['income_tax_clearance_period']);
+                appendParagraph('Income Tax clearance certificate upload', data['income_tax_clearance_certificate_upload']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">10. Bank Details</h3>';
+                appendParagraph('Name of Account Holder', data['bank_account_holder']);
+                appendParagraph('Name of the Bank', data['bank_name']);
+                appendParagraph('Branch', data['bank_branch']);
+                appendParagraph('Account No.', data['bank_account_no']);
+                appendParagraph('IFS Code', data['bank_ifs_code']);
+                appendParagraph('Bank Passbook Copy', data['bank_passbook_copy']);
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">11. & 12. Area of Operation</h3>';
+                appendParagraph('District of Assam', data['supply_district']);
+                if (data['preferred_blocks'] && data['preferred_blocks'].length > 0) {
+                    appendParagraph('Preferred Development Block(s)', data['preferred_blocks'].join(', '));
+                } else {
+                    appendParagraph('Preferred Development Block(s)', 'None selected');
+                }
+
+                reviewContentDiv.innerHTML += '<h3 class="review-section-title">Declaration</h3>';
+                appendParagraph('Declaration agreed', data['declaration_checkbox'] ? 'Yes' : 'No');
+                appendParagraph('Signatory Name', data['signatory_name']);
+                appendParagraph('Signatory Designation', data['signatory_designation']);
+                appendParagraph('Place', data['place']);
+                appendParagraph('Date', data['date']);
+            }
+
+            // Event Listeners
+            organizationTypeSelect.addEventListener('change', toggleOtherOrganizationTypeField);
+            supplyDistrictSelect.addEventListener('change', populateDevelopmentBlocks);
+
+            reviewPrintBtn.addEventListener('click', function() {
+                const form = document.getElementById('vendorRegistrationForm');
+                if (!form.checkValidity()) {
+                    form.reportValidity(); // Show native browser validation messages
+                    return;
+                }
+
+                const data = getFormDataForReview();
+                displayReviewContent(data);
+
+                formInputsSection.classList.add('hidden');
+                reviewPrintSection.classList.remove('hidden');
+                document.getElementById('confirmationMessage').style.display = 'none'; // Ensure confirmation is hidden
+            });
+
+            editBtn.addEventListener('click', function() {
+                reviewPrintSection.classList.add('hidden');
+                formInputsSection.classList.remove('hidden');
+            });
+
+            printBtn.addEventListener('click', function() {
+                // Temporarily hide elements not meant for printing
+                const originalBodyDisplay = document.body.style.display;
+                const originalFormContainerMarginTop = document.querySelector('.form-container').style.marginTop;
+                const originalReviewPrintSectionPadding = reviewPrintSection.style.padding;
+                const originalDisclaimerDisplay = document.querySelector('.disclaimer').style.display;
+                const originalH1Display = document.querySelector('h1').style.display;
+                const originalH2Display = document.querySelector('h2').style.display;
+                const originalBtnGroupDisplay = document.querySelector('#review_print_section .btn-group').style.display;
+
+                document.body.style.display = 'block'; // Ensure body is visible for printing
+                document.querySelector('.form-container').style.marginTop = '0';
+                reviewPrintSection.style.padding = '0'; // Reduce padding for print
+                document.querySelector('.disclaimer').style.display = 'none';
+                document.querySelector('h1').style.display = 'none';
+                document.querySelector('h2').style.display = 'none';
+                document.querySelector('#review_print_section .btn-group').style.display = 'none'; // Hide buttons for print
+
+                window.print();
+
+                // Restore original styles
+                document.body.style.display = originalBodyDisplay;
+                document.querySelector('.form-container').style.marginTop = originalFormContainerMarginTop;
+                reviewPrintSection.style.padding = originalReviewPrintSectionPadding;
+                document.querySelector('.disclaimer').style.display = originalDisclaimerDisplay;
+                document.querySelector('h1').style.display = originalH1Display;
+                document.querySelector('h2').style.display = originalH2Display;
+                document.querySelector('#review_print_section .btn-group').style.display = originalBtnGroupDisplay;
+            });
+
+            submitBtn.addEventListener('click', function() {
+                // In a real application, you would send this data to a server using fetch()
+                const formData = new FormData(document.getElementById('vendorRegistrationForm'));
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                     if (key.includes('[]')) {
+                        const name = key.replace('[]', '');
+                        if (!data[name]) {
+                            data[name] = [];
+                        }
+                        data[name].push(value);
+                    } else if (value instanceof File) {
+                         // For file inputs, show file name, not raw data
+                        data[key] = value.name || 'No file selected';
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                console.log('Final Form Data Submitted:', data);
+
+                reviewPrintSection.classList.add('hidden');
+                document.getElementById('confirmationMessage').style.display = 'block';
+                document.getElementById('vendorRegistrationForm').reset(); // Clear the form
+            });
+
+            // Initial checks on page load
+            toggleOtherOrganizationTypeField();
+            populateDevelopmentBlocks(); // To ensure it's hidden if no district is selected initially
+        });
+    </script>
+</body>
+</html>
